@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../domain/entities/value_objects.dart';
+import '../cubit/note_form/note_form_cubit.dart';
+
+class ColorField extends StatelessWidget {
+  const ColorField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<NoteFormCubit, NoteFormState>(
+      buildWhen: (p, c) => p.note.color != c.note.color,
+      builder: (context, state) {
+        return SizedBox(
+          height: 80,
+          child: ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: NoteColor.predefinedColors.length,
+            itemBuilder: (context, index) {
+              final Color itemColor = NoteColor.predefinedColors[index];
+              return GestureDetector(
+                onTap: () {
+                  NoteFormCubit.getInstance(context).colorChanged(itemColor);
+                },
+                child: Material(
+                  color: itemColor,
+                  elevation: 4,
+                  shape: CircleBorder(
+                    side: state.note.color.value.fold(
+                      (_) => BorderSide.none,
+                      (color) => color == itemColor
+                          ? const BorderSide(width: 1.5)
+                          : BorderSide.none,
+                    ),
+                  ),
+                  child: const SizedBox(
+                    width: 50,
+                    height: 50,
+                  ),
+                ),
+              );
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(width: 12);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
