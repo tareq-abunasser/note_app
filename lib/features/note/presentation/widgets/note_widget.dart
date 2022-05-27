@@ -24,7 +24,7 @@ class NoteWidget extends StatelessWidget {
         child: (Container(
           clipBehavior: Clip.hardEdge,
           width: double.infinity,
-          height: SizeConfig.defaultSize! *11,
+          height: SizeConfig.defaultSize! *12,
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             border: Border(

@@ -11,13 +11,7 @@ class NameFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<NoteFormCubit, NoteFormState>(
-      listenWhen: (p, c) {
-        print("tarqe");
-        print("previous : ${p.isEditing}");
-        print("current : ${c.isEditing}");
-
-        return p.isEditing != c.isEditing;
-      },
+      listenWhen: (p, c)=> p.isEditing != c.isEditing,
       listener: (context, state) {
         nameController.text = state.note.name.getOrCrash();
         print("7575${nameController.text}");

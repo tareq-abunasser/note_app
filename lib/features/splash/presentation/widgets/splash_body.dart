@@ -26,7 +26,7 @@ class SplashBody extends StatelessWidget {
             child: SizedBox(
               width: SizeConfig.defaultSize! * 20,
               child: ElevatedButton(
-                onPressed: () => Get.toNamed(MobileRoutes.HOME),
+                onPressed: () => Get.offAndToNamed(MobileRoutes.HOME),
                 style:
                 ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
                 child:  Text(

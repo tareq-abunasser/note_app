@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:note_app/features/note/presentation/cubit/note_cubit.dart';
+import 'package:note_app/routes/mobile_app_pages.dart';
 
 import '../../domain/entities/note_failure.dart';
 
@@ -39,6 +43,19 @@ class CriticalFailureDisplay extends StatelessWidget {
                 Icon(Icons.mail),
                 SizedBox(width: 4),
                 Text('I NEED HELP'),
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.offAndToNamed(MobileRoutes.HOME);
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const <Widget>[
+                Icon(Icons.refresh_sharp),
+                SizedBox(width: 4),
+                Text('reupload page'),
               ],
             ),
           )

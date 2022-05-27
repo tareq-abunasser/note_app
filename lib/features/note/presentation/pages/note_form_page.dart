@@ -52,7 +52,7 @@ class NoteFormPage extends StatelessWidget {
                     ),
                   ).show(context);
                 },
-                (_) => Get.toNamed(MobileRoutes.HOME),
+                (_) => Get.offAndToNamed(MobileRoutes.HOME),
               );
             },
           );

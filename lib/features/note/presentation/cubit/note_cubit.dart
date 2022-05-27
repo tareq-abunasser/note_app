@@ -26,11 +26,8 @@ class NoteCubit extends Cubit<NoteState> {
     _iNoteRepository.watchAll().then((failureOrNotes) {
       failureOrNotes.fold((failure) {
         emit(NoteState.loadFailure(failure));
-        print("4444 ${failure}");
-
       }, (notes) {
         emit(NoteState.loadSuccess(notes));
-        print("444 ${notes}");
       });
     });
   }

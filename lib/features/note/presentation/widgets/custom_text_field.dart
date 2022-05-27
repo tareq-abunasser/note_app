@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   final InputDecoration? decoration;
   final String? labelText;
   final String? hintText;
+  final int? maxLength;
 
   const CustomTextFormField({
     Key? key,
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
     this.decoration,
     this.labelText,
     this.hintText,
+    this.maxLength,
   }) : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class CustomTextFormField extends StatelessWidget {
       onSaved: onSaved,
       maxLines: maxLines,
       controller: controller,
+      maxLength: maxLength,
       validator: validator,
       decoration: decoration ??
           InputDecoration(

@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart' as dartz;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:note_app/features/note/domain/entities/value_objects.dart';
 import 'package:note_app/features/note/presentation/cubit/note_form/note_form_cubit.dart';
 import 'package:note_app/features/note/presentation/widgets/custom_text_field.dart';
 
@@ -23,6 +24,8 @@ class NoteFormScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NoteFormCubit, NoteFormState>(
+      buildWhen: (p, c) => (p.isEditing != c.isEditing) || ( p.note.color != c.note.color),
+
       builder: (context, state) {
         return Scaffold(
           key: scaffoldKey,
@@ -41,7 +44,7 @@ class NoteFormScaffold extends StatelessWidget {
                 }),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => Get.toNamed(MobileRoutes.HOME),
+              onPressed: () => Get.back(),
             ),
             actions: [
               IconButton(
@@ -65,11 +68,12 @@ class NoteFormScaffold extends StatelessWidget {
           ),
           body: BlocBuilder<NoteFormCubit, NoteFormState>(
             buildWhen: (p, c) =>
-                (p.showErrorMessages != c.showErrorMessages) |
                 (p.isEditing != c.isEditing),
             builder: (context, state) {
-              nameController.text = state.note.name.getOrCrash();
-              bodyController.text = state.note.body.getOrCrash();
+              if(state.isEditing){
+                nameController.text = state.note.name.getOrCrash();
+                bodyController.text = state.note.body.getOrCrash();
+              }
               return Form(
                 key: formKey,
                 child: Padding(
@@ -87,7 +91,7 @@ class NoteFormScaffold extends StatelessWidget {
                           NoteFormCubit.getInstance(context).nameChanged(value);
                         },
                         validator: (_) {
-                          NoteFormCubit.getInstance(context)
+                          return NoteFormCubit.getInstance(context)
                               .state
                               .note
                               .name
@@ -96,7 +100,7 @@ class NoteFormScaffold extends StatelessWidget {
                                 (f) => f.maybeMap(
                                   empty: (_) => 'empty name',
                                   exceedingLength: (_) =>
-                                      "you exceeding the allowed length :1000 character",
+                                      "you exceeding the allowed length :100 character",
                                   orElse: () => null,
                                 ),
                                 (r) => null,
@@ -109,19 +113,20 @@ class NoteFormScaffold extends StatelessWidget {
                       CustomTextFormField(
                         inputType: TextInputType.text,
                         controller: bodyController,
+                        maxLength: NoteBody.maxLength,
                         hintText: state.isEditing ? '' : "Type Something....",
                         onChanged: (value) {
                           NoteFormCubit.getInstance(context).bodyChanged(value);
                         },
                         validator: (_) {
-                          NoteFormCubit.getInstance(context)
+                          return NoteFormCubit.getInstance(context)
                               .state
                               .note
                               .body
                               .value
                               .fold(
                                 (f) => f.maybeMap(
-                                  empty: (_) => 'empty name',
+                                  empty: (_) => 'empty body',
                                   // defaultValue: (_)=> 'change default value',
                                   exceedingLength: (_) =>
                                       "you exceeding the allowed length :1000 character",

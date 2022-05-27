@@ -44,17 +44,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-// return Scaffold(
-// key: scaffoldKey,
-// appBar: AppBar(
-// backgroundColor: Theme.of(context).primaryColor,
-// automaticallyImplyLeading: false,
-// title: Text(
-// "My Notes",
-// style: GoogleFonts.openSans(fontWeight: FontWeight.w400),
-// ),
-// centerTitle: true,
-// ),
-// body: const NoNotes(),
-// floatingActionButton: const CustomFloatingActionButton(),
-// );

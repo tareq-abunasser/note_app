@@ -35,7 +35,7 @@ class UniqueId extends ValueObject<String, String> {
 class NoteBody extends ValueObject<String, String> {
   @override
   final Either<ValueFailure<String>, String> value;
-  static const maxLength = 1000;
+  static const maxLength = 70;
 
   factory NoteBody(String input) {
     return NoteBody._(
